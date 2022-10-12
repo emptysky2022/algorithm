@@ -2,22 +2,26 @@
 
 using namespace std;
 
-int member(int k, int n){
-    if(k == 0) return n;
-    else if(n == 2) return n + k;
-    else return member(k-1, n) + member(k, n-1);
-}
-
 int main(){
-    ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     int T, k, n;
+    int result[15][15];
+    for(int i = 0; i < 15; ++i){
+        result[i][0] = 1;
+        result[0][i] = i+1;
+    }
+    for(int i = 1; i < 15; ++i){
+        for(int j = 1; j < 15; ++j){
+            if(j == 0) result[i][j] = 1;
+            else result[i][j] = result[i-1][j] + result[i][j-1];
+        }
+    }
     cin >> T;
-    int testCase[T];
+    int arr[T];
     for(int i = 0; i < T; ++i){
         cin >> k >> n;
-        testCase[i] = member(k, n);
+        arr[i] = result[k][n-1];
     }
     for(int i = 0; i < T; ++i){
-        cout << testCase[i] << "\n";
+        cout << arr[i] << "\n";
     }
 }
