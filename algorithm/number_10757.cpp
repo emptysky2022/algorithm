@@ -26,14 +26,22 @@ int main(){
     while(A.length() > 0){
         res = A.back() - '0' + B.back() - '0';
         if(res / 10 == 1){
-            res = res % 10;
-            stringstream ssInt(addResult.back());
             int tmp;
-            ssInt >> tmp;
-            addResult.pop_back();
+            res = res % 10;
+            while(addResult.size() > 0){
+                stringstream ssInt(addResult.back());
+                ssInt >> tmp;   
+                digitCheck++;
+                if(tmp + 1 != 10) break;
+                addResult.pop_back();
+            }
+            if(addResult.size() != 0)addResult.pop_back();
             addResult.push_back(to_string(tmp + 1));
+            for(int i = 1; i < digitCheck; ++i)
+            addResult.push_back(to_string(0));
         }
         addResult.push_back(to_string(res));
+        digitCheck = 0;
         A.pop_back();
         B.pop_back();
     }
